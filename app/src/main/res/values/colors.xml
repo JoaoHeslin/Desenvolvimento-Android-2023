@@ -2,6 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="corBotoes">#3BA7D8</color>
+    <color name="corAzul">#3BA7D8</color>
+    <color name="corAmarelo">#FFEB3B</color>
+    <color name="corVermelho">#FD0421</color>
+    <color name="corRoxo">#673AB7</color>
+    <color name="corVerde">#4CAF50</color>
+    <color name="corAzulEscuro">#3F51B5</color>
 
 </resources>
