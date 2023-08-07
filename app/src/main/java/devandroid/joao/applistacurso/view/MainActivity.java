@@ -1,6 +1,7 @@
 package devandroid.joao.applistacurso.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,8 +14,6 @@ import devandroid.joao.applistacurso.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
     Pessoa pessoa;
-    Pessoa pessoa1;
-
 
     EditText editPrimeiroNome;
     EditText editSobrenome;
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //mostrando msg ao finalizar
-                Toast.makeText(MainActivity.this, "Programa Encerrado, Volte Sempre!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Aplicativo Encerrado, Volte Sempre!", Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 pessoa.setCursoDesejado(editNomeDoCursoDesejado.getText().toString());
                 pessoa.setTelefoneContato(editTelefoneDeContato.getText().toString());
                 //avisando
-                Toast.makeText(MainActivity.this, "Salvo!"+pessoa.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Salvo!" + pessoa.toString(), Toast.LENGTH_LONG).show();
 
             }
         });
