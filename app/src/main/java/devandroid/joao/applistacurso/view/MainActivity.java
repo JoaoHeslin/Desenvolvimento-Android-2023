@@ -42,16 +42,23 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor listaVip = preferences.edit();
 
         pessoa = new Pessoa();
-        pessoa.setPrimeiroNome("João");
-        pessoa.setSobrenome("Heslin");
-        pessoa.setCursoDesejado("Dev Android");
-        pessoa.setTelefoneContato("111.222");
+//        pessoa.setPrimeiroNome("João");
+//        pessoa.setSobrenome("Heslin");
+//        pessoa.setCursoDesejado("Dev Android");
+//        pessoa.setTelefoneContato("111.222");
+
+        //pegando os dados com o SharedPreferences, sempre q colocar novos dados é necessário ir no "synchronize"
+        pessoa.setPrimeiroNome(preferences.getString("primeiroNome",""));
+        pessoa.setSobrenome(preferences.getString("sobreNome",""));
+        pessoa.setCursoDesejado(preferences.getString("cursoDesejado",""));
+        pessoa.setTelefoneContato(preferences.getString("telefoneContato",""));
 
         // textos
         editPrimeiroNome = findViewById(R.id.editPrimeiroNome);
         editSobrenome = findViewById(R.id.editSobrenome);
         editNomeDoCursoDesejado = findViewById(R.id.editNomeDoCursoDesejado);
         editTelefoneDeContato = findViewById(R.id.editTelefoneDeContato);
+
         // apresentar na tela
         editPrimeiroNome.setText(pessoa.getPrimeiroNome());
         editSobrenome.setText(pessoa.getSobrenome());
