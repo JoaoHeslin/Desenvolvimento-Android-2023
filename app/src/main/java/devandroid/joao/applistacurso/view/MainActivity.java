@@ -1,6 +1,8 @@
 package devandroid.joao.applistacurso.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,11 +11,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import devandroid.joao.applistacurso.R;
+import devandroid.joao.applistacurso.controller.PessoaControler;
 import devandroid.joao.applistacurso.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
     Pessoa pessoa;
-    Pessoa pessoa1;
+    PessoaControler controler;
+    SharedPreferences preferences;
+    public static final String NOME_PREFERENCES = "pref_listaVip";
 
 
     EditText editPrimeiroNome;
@@ -29,6 +34,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        controler = new PessoaControler();
+        //instanciando
+        preferences = getSharedPreferences(NOME_PREFERENCES,0);
+        //arquivo pra receber os dados
+        SharedPreferences.Editor listaVip = preferences.edit();
 
         pessoa = new Pessoa();
         pessoa.setPrimeiroNome("João");
@@ -51,22 +62,16 @@ public class MainActivity extends AppCompatActivity {
         btnLimpar = findViewById(R.id.btnLimpar);
         btnSalvar = findViewById(R.id.btnSalvar);
         btnFinalizar = findViewById(R.id.btnFinalizar);
+
         // fazendo pegar o clique e as funções
         btnLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //limpando os dados
                 editPrimeiroNome.setText("");
                 editSobrenome.setText("");
                 editNomeDoCursoDesejado.setText("");
                 editTelefoneDeContato.setText("");
-            }
-        });
-        btnFinalizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //mostrando msg ao finalizar
-                Toast.makeText(MainActivity.this, "Programa Encerrado, Volte Sempre!", Toast.LENGTH_LONG).show();
-                finish();
             }
         });
         btnSalvar.setOnClickListener(new View.OnClickListener() {
@@ -80,9 +85,27 @@ public class MainActivity extends AppCompatActivity {
                 //avisando
                 Toast.makeText(MainActivity.this, "Salvo!"+pessoa.toString(), Toast.LENGTH_LONG).show();
 
+                //salvando os dados com o sharedPreferences
+                listaVip.putString("primeiroNome",pessoa.getPrimeiroNome());
+                listaVip.putString("sobreNome",pessoa.getSobrenome());
+                listaVip.putString("cursoDesejado",pessoa.getCursoDesejado());
+                listaVip.putString("telefoneContato",pessoa.getTelefoneContato());
+                listaVip.apply();
+
+                controler.salvar(pessoa);
+            }
+        });
+        btnFinalizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //mostrando msg ao finalizar
+                Toast.makeText(MainActivity.this, "Programa Encerrado, Volte Sempre!", Toast.LENGTH_LONG).show();
+                //finalizando
+                finish();
             }
         });
 
 
+        Log.i("POO android", "Objeto pessoa: "+pessoa.toString());
     }
 }
