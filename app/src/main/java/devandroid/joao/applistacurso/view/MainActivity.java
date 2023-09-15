@@ -17,7 +17,6 @@ import devandroid.joao.applistacurso.model.Pessoa;
 public class MainActivity extends AppCompatActivity {
     Pessoa pessoa;
     PessoaControler controler;
-    SharedPreferences preferences;
     public static final String NOME_PREFERENCES = "pref_listaVip";
 
 
@@ -35,11 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        controler = new PessoaControler();
-        //instanciando
-        preferences = getSharedPreferences(NOME_PREFERENCES,0);
-        //arquivo pra receber os dados
-        SharedPreferences.Editor listaVip = preferences.edit();
+        controler = new PessoaControler(MainActivity.this);
+
 
         pessoa = new Pessoa();
 //        pessoa.setPrimeiroNome("João");
@@ -47,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
 //        pessoa.setCursoDesejado("Dev Android");
 //        pessoa.setTelefoneContato("111.222");
 
-        //pegando os dados com o SharedPreferences, sempre q colocar novos dados é necessário ir no "synchronize"
-        pessoa.setPrimeiroNome(preferences.getString("primeiroNome",""));
-        pessoa.setSobrenome(preferences.getString("sobreNome",""));
-        pessoa.setCursoDesejado(preferences.getString("cursoDesejado",""));
-        pessoa.setTelefoneContato(preferences.getString("telefoneContato",""));
+//        //pegando os dados salvos com o SharedPreferences, sempre q colocar novos dados é necessário ir no "synchronize"
+//        pessoa.setPrimeiroNome(preferences.getString("primeiroNome",""));
+//        pessoa.setSobrenome(preferences.getString("sobreNome",""));
+//        pessoa.setCursoDesejado(preferences.getString("cursoDesejado",""));
+//        pessoa.setTelefoneContato(preferences.getString("telefoneContato",""));
 
         // textos
         editPrimeiroNome = findViewById(R.id.editPrimeiroNome);
@@ -79,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 editSobrenome.setText("");
                 editNomeDoCursoDesejado.setText("");
                 editTelefoneDeContato.setText("");
+
+//                //limpando do arquivo, para ver é necessário ir no "synchronize"
+//                listaVip.clear();
+//                listaVip.apply();
             }
         });
         btnSalvar.setOnClickListener(new View.OnClickListener() {
@@ -91,14 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 pessoa.setTelefoneContato(editTelefoneDeContato.getText().toString());
                 //avisando
                 Toast.makeText(MainActivity.this, "Salvo!"+pessoa.toString(), Toast.LENGTH_LONG).show();
-
-                //salvando os dados com o sharedPreferences
-                listaVip.putString("primeiroNome",pessoa.getPrimeiroNome());
-                listaVip.putString("sobreNome",pessoa.getSobrenome());
-                listaVip.putString("cursoDesejado",pessoa.getCursoDesejado());
-                listaVip.putString("telefoneContato",pessoa.getTelefoneContato());
-                listaVip.apply();
-
                 controler.salvar(pessoa);
             }
         });
@@ -111,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
         Log.i("POO android", "Objeto pessoa: "+pessoa.toString());
     }
 }
