@@ -10,14 +10,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import devandroid.joao.applistacurso.R;
+import devandroid.joao.applistacurso.controller.CursoController;
 import devandroid.joao.applistacurso.controller.PessoaControler;
+import devandroid.joao.applistacurso.model.Curso;
 import devandroid.joao.applistacurso.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
     Pessoa pessoa;
     PessoaControler controler;
+
     public static final String NOME_PREFERENCES = "pref_listaVip";
+
+    CursoController cursoController;
+    List<Curso> listaCursos;
 
 
     EditText editPrimeiroNome;
@@ -36,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         controler = new PessoaControler(MainActivity.this);
         pessoa = new Pessoa();
+
+        cursoController = new CursoController();
+        cursoController.getListaDeCursos();
         //para mostrar os dados na tela, que foram adiciondos antes.
         controler.buscarDados(pessoa);
 
