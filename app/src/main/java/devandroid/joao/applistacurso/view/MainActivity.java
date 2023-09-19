@@ -35,19 +35,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         controler = new PessoaControler(MainActivity.this);
-
-
         pessoa = new Pessoa();
-//        pessoa.setPrimeiroNome("João");
-//        pessoa.setSobrenome("Heslin");
-//        pessoa.setCursoDesejado("Dev Android");
-//        pessoa.setTelefoneContato("111.222");
+        //para mostrar os dados na tela, que foram adiciondos antes.
+        controler.buscarDados(pessoa);
 
-//        //pegando os dados salvos com o SharedPreferences, sempre q colocar novos dados é necessário ir no "synchronize"
-//        pessoa.setPrimeiroNome(preferences.getString("primeiroNome",""));
-//        pessoa.setSobrenome(preferences.getString("sobreNome",""));
-//        pessoa.setCursoDesejado(preferences.getString("cursoDesejado",""));
-//        pessoa.setTelefoneContato(preferences.getString("telefoneContato",""));
 
         // textos
         editPrimeiroNome = findViewById(R.id.editPrimeiroNome);
@@ -75,10 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 editSobrenome.setText("");
                 editNomeDoCursoDesejado.setText("");
                 editTelefoneDeContato.setText("");
-
-//                //limpando do arquivo, para ver é necessário ir no "synchronize"
-//                listaVip.clear();
-//                listaVip.apply();
+                controler.limpar();
             }
         });
         btnSalvar.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 pessoa.setSobrenome(editSobrenome.getText().toString());
                 pessoa.setCursoDesejado(editNomeDoCursoDesejado.getText().toString());
                 pessoa.setTelefoneContato(editTelefoneDeContato.getText().toString());
+
                 //avisando
                 Toast.makeText(MainActivity.this, "Salvo!"+pessoa.toString(), Toast.LENGTH_LONG).show();
                 controler.salvar(pessoa);

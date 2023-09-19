@@ -20,6 +20,7 @@ public class PessoaControler {
         listaVip = preferences.edit();
     }
     public void criarSharedPreferebces(){
+
     }
     public void salvar(Pessoa pessoa){
         Log.d("MVC_Controler", "salvo: "+pessoa.toString());
@@ -31,10 +32,19 @@ public class PessoaControler {
         listaVip.putString("telefoneContato",pessoa.getTelefoneContato());
         listaVip.apply();
     }
-    public void buscarDados(){
+    public Pessoa buscarDados(Pessoa pessoa){
+//      pegando os dados salvos com o SharedPreferences, sempre q colocar novos dados é necessário ir no "synchronize"
+        pessoa.setPrimeiroNome(preferences.getString("primeiroNome",""));
+        pessoa.setSobrenome(preferences.getString("sobreNome",""));
+        pessoa.setCursoDesejado(preferences.getString("cursoDesejado",""));
+        pessoa.setTelefoneContato(preferences.getString("telefoneContato",""));
 
+        return pessoa;
     }
     public void limpar(){
+        //limpando do arquivo, para ver é necessário ir no "synchronize"
+                listaVip.clear();
+                listaVip.apply();
 
     }
 }
