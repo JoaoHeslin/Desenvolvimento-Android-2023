@@ -2,9 +2,7 @@ package devandroid.joao.applistacurso.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import devandroid.joao.applistacurso.model.Curso;
-
 public class CursoController {
 
     private List<Curso> listCursos;
@@ -26,7 +24,6 @@ public class CursoController {
 
         ArrayList<String> dados = new ArrayList<>();
         for (int i = 0; i < getListaDeCursos().size(); i++) {
-
             Curso objeto = getListaDeCursos().get(i);
             dados.add(objeto.getCursoDesejado());
         }

@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.List;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String NOME_PREFERENCES = "pref_listaVip";
 
     CursoController cursoController;
-    List<Curso> listaCursos;
+    List<String> nomesDosCursos;
 
 
     EditText editPrimeiroNome;
@@ -37,16 +39,20 @@ public class MainActivity extends AppCompatActivity {
     Button btnSalvar;
     Button btnFinalizar;
 
+    Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        //antes era setContentView(R.layout.activity_main); foi mudado para o adquirir as configurações feitas no spinner.
+        setContentView(R.layout.activity_spinner);
 
         controler = new PessoaControler(MainActivity.this);
         pessoa = new Pessoa();
 
         cursoController = new CursoController();
-        cursoController.getListaDeCursos();
+        nomesDosCursos = cursoController.dadosPAraSpinner();
         //para mostrar os dados na tela, que foram adiciondos antes.
         controler.buscarDados(pessoa);
 
@@ -67,6 +73,20 @@ public class MainActivity extends AppCompatActivity {
         btnLimpar = findViewById(R.id.btnLimpar);
         btnSalvar = findViewById(R.id.btnSalvar);
         btnFinalizar = findViewById(R.id.btnFinalizar);
+
+        // spinner
+        spinner = findViewById(R.id.spinner);
+
+        //adapter string pq vai retornar os nomes. = ArrayAdapter<String> adapter = new ArrayAdapter<>
+        //layout é esse android.R.layout.simple_list_item_1
+        //injetar o daparter para o spinner e a lista sera gerada
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                cursoController.dadosPAraSpinner());
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinner.setAdapter(adapter);
+        //para fazer a tela rolar fez esse ScrollView
+        //para colocar os botoes um ao lado do outro faz um linea layout só neles
+
 
         // fazendo pegar o clique e as funções
         btnLimpar.setOnClickListener(new View.OnClickListener() {
